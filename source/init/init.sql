@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS metadata WITH (FORCE);
 CREATE DATABASE metadata;
 
-CREATE TABLE item (
+CREATE TABLE items (
     id INTEGER PRIMARY KEY,
     created TIMESTAMP WITHOUT TIME ZONE DEFAULT now() NOT NULL,
     updated TIMESTAMP WITHOUT TIME ZONE DEFAULT now() NOT NULL
@@ -21,7 +21,7 @@ CREATE TABLE store (
 );
 
 INSERT INTO
-    item(id)
+    items(id)
 VALUES
     (0001),
     (0002),

@@ -2,27 +2,31 @@ version: '3.6'
 services:
   postgres:
     image: postgres:latest
+    container_name: postgres
+    hostname: postgres
     restart: always
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    networks:
+      - hasura
     ports:
-      - target: 5432
-        published: 5432
+      - 5432:5432
     volumes:
       - ./source/init/init.sh:/docker-entrypoint-initdb.d/init.sh
       - ./source/init/init.sql:/var/tmp/init.sql
-    networks:
-    - hasura-prometheus-grafana
 
   hasura:
-    image: hasura/graphql-engine:v2.32.0.cli-migrations-v3
+    image: hasura/graphql-engine:latest
     ports:
       - "8080:8080"
     depends_on:
       - postgres
     restart: always
+    stop_grace_period: 1s
+    volumes:
+      - logs:/tmp/log
     environment:
       HASURA_GRAPHQL_ADMIN_SECRET: myadminsecret
       HASURA_GRAPHQL_DEV_MODE: "true"
@@ -35,7 +39,7 @@ services:
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
       HASURA_GRAPHQL_METRICS_SECRET: hasura
     networks:
-      - hasura-prometheus-grafana
+      - hasura
 
   prometheus:
     image: prom/prometheus:latest
@@ -44,10 +48,11 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus:/etc/prometheus/
+      - prometheus-data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     networks:
-      - hasura-prometheus-grafana
+      - hasura
 
   grafana:
     image: grafana/grafana:latest
@@ -58,7 +63,7 @@ services:
       GF_SECURITY_ADMIN_USER: myadmin
       GF_SECURITY_ADMIN_PASSWORD: myadminpass
     networks:
-      - hasura-prometheus-grafana
+      - hasura
 
   nodejs-app:
     build:
@@ -66,8 +71,14 @@ services:
     restart: always
     ports:
       - '4000:4000'
+    networks:
+      - hasura  
     depends_on:
       - hasura
 
 networks:
-  hasura-prometheus-grafana:
+  hasura:
+
+volumes:
+  logs:
+  prometheus-data:
