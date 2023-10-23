@@ -2,19 +2,19 @@
 FROM node:latest
 
 # Set the working directory in the container
-WORKDIR /app/source
+WORKDIR /frontend
 
 # Copy package.json and package-lock.json to the container
-COPY /source/app/package.json ./
+COPY package*.json ./
 
 # Install application dependencies
 RUN npm install
 
 # Copy the rest of your application code to the container
-COPY ./source/app .
+COPY . .
 
-# Expose the port your Node.js application will run on
-EXPOSE 4000
+# Expose the port your Next.js application will run on
+EXPOSE 3000
 
 # Start your Node.js application
-CMD ["node", "app.js"]
+CMD npm run dev
