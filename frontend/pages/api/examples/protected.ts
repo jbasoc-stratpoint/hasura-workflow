@@ -18,26 +18,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     const query = gql`
-      query GetUserName($id: uuid!) {
-        users_by_pk(id: $id) {
-          name
-        }
+    query MyQuery($email: String!) {
+      users(where: {email: {_eq: $email}}) {
+        email
+        name
       }
+    }
+    
     `;
 
-    const { users_by_pk: user } = await request(
+    const { users: user } = await request(
       process.env.HASURA_PROJECT_ENDPOINT!,
       query,
-      { id: session.user?.id },
+      { email: session.user?.email },
       { authorization: `Bearer ${token}` }
     );
     res.send({
-      content: `This is protected content. Your name is ${user.name}`,
+      content: `This is protected content. Your name is ${user[0].name}`,
     });
   } else {
     res.send({
       error:
-        "You must be signed in to view the protected content on this page.",
+        "You must be sifsdfsdfsdgned ineweqw to view the protected content on this page.",
     });
   }
 };

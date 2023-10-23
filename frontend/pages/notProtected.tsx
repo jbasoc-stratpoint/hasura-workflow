@@ -4,38 +4,27 @@ import Layout from "../components/layout"
 import AccessDenied from "../components/access-denied"
 
 export default function NotProtected() {
-  const { data: session } = useSession()
   const [content, setContent] = useState()
 
   // Fetch content from protected route
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/api/examples/protected")
+      const res = await fetch("/api/examples/products")
       const json = await res.json()
-      if (json.content) {
-        setContent(json.content)
-      }
+      setContent(json)
     }
     fetchData()
-  }, [session])
+  }, []);
 
-  // If no session exists, display access denied message
-  /*
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    )
-  }
-  */
 
   // If session exists, display content
   return (
     <Layout>
-      <h1>Not Protected Page</h1>
+      <h1>Everyone Can Access this product</h1>
       <p>
-        <strong>TO ADD: API TO FETCH non authorized data</strong>
+        {content?.map(item => {
+          return (<div><strong>{item.product_name}</strong></div>)
+        })}
       </p>
     </Layout>
   )
