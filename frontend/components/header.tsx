@@ -70,12 +70,6 @@ export default function Header() {
             <Link href="/">Home</Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="/client">Client</Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/server">Server</Link>
-          </li>
-          <li className={styles.navItem}>
             <Link href="/protected">Protected</Link>
           </li>
           <li className={styles.navItem}>

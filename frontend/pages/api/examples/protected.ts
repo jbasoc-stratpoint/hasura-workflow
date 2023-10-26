@@ -10,31 +10,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (session) {
     const secret = process.env.NEXTAUTH_SECRET;
 
-    const token = await getToken({
-      req,
-      secret,
-      // Raw gives the un-decoded JWT
-      raw: true,
-    });
-
-    const query = gql`
-    query MyQuery($email: String!) {
-      users(where: {email: {_eq: $email}}) {
-        email
-        name
-      }
-    }
-    
-    `;
-
-    const { users: user } = await request(
-      process.env.HASURA_PROJECT_ENDPOINT!,
-      query,
-      { email: session.user?.email },
-      { authorization: `Bearer ${token}` }
-    );
     res.send({
-      content: `This is protected content. Your name is ${user[0].name}`,
+      content: `This is protected content. Your name is ${session?.user?.name}`,
     });
   } else {
     res.send({
