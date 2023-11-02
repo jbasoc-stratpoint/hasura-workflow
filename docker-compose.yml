@@ -14,8 +14,8 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./source/init/init.sh:/docker-entrypoint-initdb.d/init.sh
-      - ./source/init/init.sql:/var/tmp/init.sql
+      - ./init/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./init/init.sql:/var/tmp/init.sql
 
   hasura:
     image: hasura/graphql-engine:latest
@@ -83,7 +83,7 @@ services:
     ports:
       - '3000:3000'
     networks:
-      - hasura-prometheus-grafana
+      - hasura
     depends_on:
       - hasura
 
