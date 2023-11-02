@@ -29,6 +29,7 @@ services:
       - logs:/tmp/log
     environment:
       HASURA_GRAPHQL_ADMIN_SECRET: myadminsecret
+      HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "7799bf9aedc9690c8c82cd101ebf8da5" }'
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: "true"
@@ -58,7 +59,7 @@ services:
     image: grafana/grafana:latest
     restart: always
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       GF_SECURITY_ADMIN_USER: myadmin
       GF_SECURITY_ADMIN_PASSWORD: myadminpass
@@ -67,12 +68,22 @@ services:
 
   nodejs-app:
     build:
-      context: .
+      context: ./backend
     restart: always
     ports:
       - '4000:4000'
     networks:
       - hasura  
+    depends_on:
+      - hasura
+
+  nextjs-app:
+    build:
+      context: ./frontend
+    ports:
+      - '3000:3000'
+    networks:
+      - hasura-prometheus-grafana
     depends_on:
       - hasura
 
