@@ -1,6 +1,40 @@
-actions: []
+actions:
+  - name: createUser
+    definition:
+      kind: asynchronous
+      handler: http://localhost:4000/
+      timeout: 60
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "users": {
+                "email_address": {{$body.input.data.email_address}},
+                "first_name": {{$body.input.data.first_name}},
+                "last_name": {{$body.input.data.last_name}}
+              }
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        url: '{{$base_url}}createUser'
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "response": {{$body}}
+            }
+        template_engine: Kriti
+        version: 2
+    comment: Create User
 custom_types:
-    enums: []
-    input_objects: []
-    objects: []
-    scalars: []
+  enums: []
+  input_objects:
+    - name: UserInput
+  objects:
+    - name: User
+    - name: UserOutput
+  scalars: []
