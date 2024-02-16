@@ -1,5 +1,10 @@
-version: '3.6'
+version: '3.7'
 services:
+  redis:
+    image: redis:7
+    restart: always
+    # ports:
+    #   - 6379:6379
   postgres:
     image: postgres:latest
     restart: always
@@ -9,12 +14,23 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - target: 5432
-        published: 5432
+        published: 5433
     volumes:
       - ./source/init/init.sh:/docker-entrypoint-initdb.d/init.sh
       - ./source/init/init.sql:/var/tmp/init.sql
     networks:
     - hasura-prometheus-grafana
+
+  mongodb:
+    image: mongo:6
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - 127.0.0.1:27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopassword
 
   hasura:
     image: hasura/graphql-engine:v2.32.0.cli-migrations-v3
@@ -35,8 +51,20 @@ services:
       HASURA_GRAPHQL_LOG_LEVEL: info 
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
       HASURA_GRAPHQL_METRICS_SECRET: hasura
+      HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: "/srv/console-assets"
+      HASURA_GRAPHQL_REDIS_URL: redis://redis:6379
+      HASURA_GRAPHQL_RATE_LIMIT_REDIS_URL: "redis://redis:6379"
+      HASURA_GRAPHQL_MAX_CACHE_SIZE: "200"
+      HASURA_GRAPHQL_METADATA_DEFAULTS: '{"backend_configs":{"dataconnector":{"Mongo":{"uri":"http://mongo-data-connector:3000"}}}}'
+      # DATA_CONNECTOR_AGENT_MONGODB_URI: "mongodb://bmmatias:9KjoF9fomIUu7X6U@test-db.ykb1dxl.mongodb.net/"
+      # DATA_CONNECTOR_AGENT_PORT: 27017:27017
     networks:
       - hasura-prometheus-grafana
+
+  mongo-data-connector:
+    image: hasura/mongo-data-connector:v2.37.0
+    ports:
+      - 3000:3000
 
   prometheus:
     image: prom/prometheus:latest
@@ -74,7 +102,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - '3000:3000'
+      - '5000:3000'
     networks:
       - hasura-prometheus-grafana
     depends_on:
@@ -82,3 +110,10 @@ services:
 
 networks:
   hasura-prometheus-grafana:
+  hasura:
+
+volumes:
+  logs:
+  prometheus-data:
+  mongo_data:
+  

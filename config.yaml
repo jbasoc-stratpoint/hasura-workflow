@@ -1,6 +1,11 @@
 version: 3
 endpoint: http://localhost:8080
 metadata_directory: metadata
+databases:
+  - name: test-db
+    connector: mongo
+    config:
+      database_url: "mongodb+srv://bmmatias:9KjoF9fomIUu7X6U@test-db.ykb1dxl.mongodb.net/?retryWrites=true&w=majority"
 actions:
   kind: synchronous
   handler_webhook_baseurl: http://localhost:3000
