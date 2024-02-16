@@ -1,22 +1,25 @@
 import { withAuth } from "next-auth/middleware"
-import { useSession } from "next-auth/react"
+import { useSession, getSession } from "next-auth/react"
 
 // More on how NextAuth.js middleware works: https://next-auth.js.org/configuration/nextjs#middleware
-export default withAuth({
+export  default withAuth({
   callbacks: {
-    authorized({ req, token }) {
+    async authorized({ req, token }) {
+      const requestForNextAuth = {
+        headers: {
+          cookie: req.headers.get('cookie'),
+        },
+      };
 
-      console.log(req)
+      const session = await getSession({ req: requestForNextAuth as any });
       // `/admin` requires admin role
       if (req.nextUrl.pathname === "/admin") {
-        return token?.userRole === "admin"
+        return session?.user?.role === "admin"
       }
-      console.log("token is required")
-      console.log(token)
       // `/me` only requires the user to be logged in
-      return !!token
+      return !!session
     },
   },
 })
 
-export const config = { matcher: ["/admin"] }
+export const config = { matcher: ["/admin", "/me"] }

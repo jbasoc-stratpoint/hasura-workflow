@@ -20,12 +20,27 @@ export default function NotProtected() {
   // If session exists, display content
   return (
     <Layout>
-      <h1>Everyone Can Access this product</h1>
-      <p>
-        {content?.map(item => {
-          return (<div><strong>{item.product_name}</strong></div>)
+      <h1>Everyone Can Access these products</h1>
+      <figure>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Description</th>
+              </tr>
+            </thead>
+             <tbody>
+             {content?.map(item => {
+          return (
+            <tr key={item.id}>
+            <td>{item.product_name}</td>
+            <td>{item.product_description}</td>
+          </tr>)
         })}
-      </p>
+    </tbody>
+          </table>
+        </figure>
+
     </Layout>
   )
 }

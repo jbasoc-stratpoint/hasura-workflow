@@ -14,6 +14,7 @@
   "author": "Iain Collins <me@iaincollins.com>",
   "contributors": [],
   "dependencies": {
+    "@picocss/pico": "^1.5.11",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "jsonwebtoken": "^9.0.2",

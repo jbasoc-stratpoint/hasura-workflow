@@ -1,0 +1,6 @@
+- "!include public_accounts.yaml"
+- "!include public_category.yaml"
+- "!include public_orders.yaml"
+- "!include public_products.yaml"
+- "!include public_role.yaml"
+- "!include public_users.yaml"

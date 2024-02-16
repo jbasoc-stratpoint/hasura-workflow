@@ -6,6 +6,7 @@ import AccessDenied from "../components/access-denied"
 export default function ProtectedPage() {
   const { data: session } = useSession()
   const [content, setContent] = useState()
+  const [orders, setOrders] = useState()
 
   // Fetch content from protected route
   useEffect(() => {
@@ -14,8 +15,10 @@ export default function ProtectedPage() {
       const json = await res.json()
       if (json.content) {
         setContent(json.content)
+        setOrders(json.orders.orders)
       }
     }
+    
     fetchData()
   }, [session])
 
@@ -31,10 +34,36 @@ export default function ProtectedPage() {
   // If session exists, display content
   return (
     <Layout>
-      <h1>Protected Page</h1>
+      <h1>Protected Orders Page</h1>
       <p>
         <strong>{content ?? "\u00a0"}</strong>
       </p>
+      <div>
+        <p>If your role is an admin, you can view all orders; otherwise, you can only view your own orders:</p>
+        <figure>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Order No</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Description</th>
+              </tr>
+            </thead>
+             <tbody>
+             {orders?.map(item => {
+          return (
+            <tr key={item.id}>
+            <th scope="row">{item.order_id}</th>
+            <td>{item.product.product_name}</td>
+            <td>{item.product.product_description}</td>
+          </tr>)
+        })}
+    </tbody>
+          </table>
+        </figure>
+        
+       
+      </div>
     </Layout>
   )
 }
