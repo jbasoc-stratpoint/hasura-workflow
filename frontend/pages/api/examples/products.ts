@@ -19,6 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     query MyQuery {
       products {
         product_name
+        product_description
         id
       }
     }

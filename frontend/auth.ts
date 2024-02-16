@@ -41,7 +41,6 @@ export const config = {
     },
     */
     async jwt({ token }) {
-      //token.userRole = "admin"
       const query = gql`
       query FetchUser($email: String!) {
         users(where: {email: {_eq: $email}}) {
@@ -53,7 +52,6 @@ export const config = {
         }
       }
       `;
-  
       const { users: user } = await request(
         process.env.HASURA_PROJECT_ENDPOINT!,
         query,
@@ -63,7 +61,8 @@ export const config = {
 
       if(user.length > 0) {
         const role = user[0].role.role_name;
-        console.log(user)
+
+        token.userRole = role
         return {
           ...token,
           "https://hasura.io/jwt/claims": {
@@ -77,8 +76,10 @@ export const config = {
       
     },
     session: async ({ session, token }) => {
+      //console.log("IN SESSION ,", token)
       if (session?.user) {
         session.user.id = token.sub!;
+        session.user.role = token.userRole;
       }
       return session;
     },

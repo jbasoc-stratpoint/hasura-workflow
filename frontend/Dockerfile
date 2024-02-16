@@ -8,7 +8,7 @@ WORKDIR /frontend
 COPY package*.json ./
 
 # Install application dependencies
-RUN npm install
+RUN yarn install
 
 # Copy the rest of your application code to the container
 COPY . .
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Start your Node.js application
-CMD npm run dev
+CMD yarn dev
