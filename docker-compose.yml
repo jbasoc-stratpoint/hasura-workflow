@@ -67,6 +67,8 @@ services:
     restart: always
     ports:
       - '4000:4000'
+    networks:
+      - hasura-prometheus-grafana
     depends_on:
       - hasura
 
