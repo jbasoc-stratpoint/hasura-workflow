@@ -65,6 +65,8 @@ services:
     build:
       context: ./backend
     restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/metadata?schema=public
     ports:
       - '4000:4000'
     networks:
