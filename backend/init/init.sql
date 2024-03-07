@@ -8,7 +8,7 @@ CREATE TABLE item (
 );
 
 CREATE TABLE store (
-    store_id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     name CHARACTER VARYING(128) NOT NULL,
     address CHARACTER VARYING(64) NOT NULL,
     city CHARACTER VARYING(64) NOT NULL,
@@ -46,7 +46,7 @@ VALUES
     (0021);
 
 INSERT INTO
-    store (store_id, name, address, city, state, zip_code, latitude, longitude)
+    store (id, name, address, city, state, zip_code, latitude, longitude)
 VALUES
     (2803, 'Santa Clara', '3149 Stevens Creek Boulevard', 'San Jose', 'CA', 95117, 37.323886, -121.952181),
     (3025, 'Sunnyvale', '1247 West El Camino Real', 'Sunnyvale', 'CA', 94086, 37.375004, -122.057389),

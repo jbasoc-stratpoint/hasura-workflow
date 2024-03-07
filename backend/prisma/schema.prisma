@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Items {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique() @db.VarChar(128)
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+}
+
+model Stores {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(128)
+  address   String   @db.VarChar(64)
+  city      String   @db.VarChar(64)
+  state     String   @db.VarChar(2)
+  zipCode   Decimal  @db.Decimal(5, 0) @map("zip_code")
+  latitude  Decimal  @db.Decimal(9, 6)
+  longitude Decimal  @db.Decimal(9, 6)
+  created   DateTime @default(now())
+  updated   DateTime @updatedAt
+}
