@@ -7,7 +7,7 @@ services:
     #   - 6379:6379
   postgres:
     image: postgres:15
-
+    container_name: data
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -51,7 +51,6 @@ services:
       HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "7799bf9aedc9690c8c82cd101ebf8da5" }'
       ## The metadata database for this Hasura GraphQL project. Can be changed to a managed postgres instance
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-
       ## Optional settings
       ## enable the console served by server
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
@@ -71,8 +70,8 @@ services:
       HASURA_GRAPHQL_CACHE_MAX_ENTRY_SIZE: "200"
       HASURA_GRAPHQL_METADATA_DEFAULTS: '{"backend_configs":{"dataconnector":{"Mongo":{"uri":"http://mongo-data-connector:3000"}}}}'
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
+      - mongodb
   #migration-seed:
   #  image: hasura/graphql-engine:v2.37.1.cli-migrations-v3
   #  command: bash -c "hasura migrate apply  --admin-secret myadminsecret && hasura seed apply --admin-secret myadminsecret"
@@ -116,8 +115,6 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/metadata?schema=public
     ports:
       - '4000:4000'
-    networks:
-      - hasura-prometheus-grafana
     depends_on:
       - hasura
   nextjs-app:
