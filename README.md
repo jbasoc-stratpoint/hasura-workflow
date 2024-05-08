@@ -32,11 +32,11 @@ $ git clone https://gitlab.stratpoint.dev/your-namespace/your-project-name
 ```
 NEXTAUTH_URL='http://localhost:3000'
 NEXTAUTH_SECRET= <Generated Next Auth Secret >
-AUTH_GITHUB_ID='9b1f0b2b541767da734e'
-AUTH_GITHUB_SECRET='5b846fbbc8ef356902601c6d02124364f899b452'
+AUTH_GITHUB_ID=<Github Client ID>
+AUTH_GITHUB_SECRET=<Github Secret Key>
 HASURA_PROJECT_ENDPOINT='http://host.docker.internal:8080/v1/graphql'
 
-HASURA_ADMIN_SECRET='myadminsecret'
+HASURA_ADMIN_SECRET=<Local Admin Secret>
 ```
 
 - To generate the NEXTAUTH_SECRET, you may follow this [link](https://hasura.io/blog/next-js-jwt-authentication-with-next-auth-and-integration-with-hasura "Next Auth")
