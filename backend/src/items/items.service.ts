@@ -3,10 +3,9 @@ import { ItemsRepository } from 'src/__common__/repositories/items.repository';
 import { IItems } from 'src/__common__/interfaces';
 import { IService } from 'src/__common__/interfaces/services/__service.interface';
 
-
 @Injectable()
 export class ItemsService implements IService<IItems> {
-  constructor(private readonly itemsRepository: ItemsRepository) { }
+  constructor(private readonly itemsRepository: ItemsRepository) {}
 
   public async findById(id: number): Promise<IItems> {
     const item = await this.itemsRepository.findById(id);

@@ -7,6 +7,6 @@ import { StoresService } from './stores.service';
 @Module({
   imports: [RepositoryModule],
   controllers: [StoresController],
-  providers: [StoresService]
+  providers: [StoresService],
 })
-export class StoresModule { }
+export class StoresModule {}

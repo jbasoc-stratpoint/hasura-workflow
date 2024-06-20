@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "echo 'Husky is Running!'"
   },
   "author": "Iain Collins <me@iaincollins.com>",
   "contributors": [],
@@ -28,6 +29,8 @@
     "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "^18.16.2",
     "@types/react": "^18.2.0",
+    "eslint": "9.5.0",
+    "eslint-config-next": "14.2.4",
     "typescript": "5.2.2"
   }
 }

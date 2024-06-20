@@ -1,5 +1,5 @@
-import { Stores as StoreEntity } from "@prisma/client";
-import { Decimal } from "@prisma/client/runtime/library";
+import { Stores as StoreEntity } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 
 export interface IStores extends Partial<StoreEntity> {
   id: number;

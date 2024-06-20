@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Decimal } from "@prisma/client/runtime/library";
-import { Prisma } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import { Transform } from 'class-transformer';
 import { IsLatitude, IsLongitude, IsNumber, IsString } from 'class-validator';
 

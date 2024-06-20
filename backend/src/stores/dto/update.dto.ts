@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsNumber, IsString, IsLongitude, IsLatitude, IsOptional } from 'class-validator';
+import {
+  IsNumber,
+  IsString,
+  IsLongitude,
+  IsLatitude,
+  IsOptional,
+} from 'class-validator';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export class UpdateIdDto {

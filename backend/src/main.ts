@@ -17,9 +17,7 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Hasura NestJS Backend')
-    .setDescription(
-      'Hasura NestJS Backend',
-    )
+    .setDescription('Hasura NestJS Backend')
     .setVersion('v0.1.0')
     .build();
 
@@ -29,4 +27,3 @@ async function bootstrap() {
   await app.listen(4000);
 }
 bootstrap();
-

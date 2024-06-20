@@ -1,4 +1,4 @@
-import { Items as ItemEntity } from "@prisma/client";
+import { Items as ItemEntity } from '@prisma/client';
 
 export interface IItems extends Partial<ItemEntity> {
   id: number;

@@ -4,7 +4,7 @@ import { IStores } from 'src/__common__/interfaces';
 
 @Injectable()
 export class StoresService {
-  constructor(private readonly storesRepository: StoresRepository) { }
+  constructor(private readonly storesRepository: StoresRepository) {}
 
   public async findById(id: number): Promise<IStores> {
     const item = await this.storesRepository.findById(id);

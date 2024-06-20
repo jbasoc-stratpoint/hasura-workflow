@@ -1,18 +1,34 @@
-import { Controller, Get, Post, Delete, Put, HttpCode, HttpStatus, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Put,
+  HttpCode,
+  HttpStatus,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { ItemsService } from './items.service';
-import { FindByIdDto, CreateDto, DeleteDto, UpdateBodyDto, UpdateIdDto } from './dto';
+import {
+  FindByIdDto,
+  CreateDto,
+  DeleteDto,
+  UpdateBodyDto,
+  UpdateIdDto,
+} from './dto';
 import { ItemResponse } from './responseMappers/item.response';
 
 @Controller('items')
 export class ItemsController {
-  constructor(private readonly itemsService: ItemsService) { }
+  constructor(private readonly itemsService: ItemsService) {}
 
   @Get()
   @ApiOkResponse({ type: [ItemResponse] })
   @HttpCode(HttpStatus.OK)
   async findAll() {
-    return await this.itemsService.findAll({})
+    return await this.itemsService.findAll({});
   }
 
   @Get(':id')

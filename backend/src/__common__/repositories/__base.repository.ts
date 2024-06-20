@@ -57,7 +57,10 @@ export abstract class BaseRepository<TEntity> {
     return await this.databaseService.aggregate(args);
   }
 
-  public async update(id: string | number, data: Partial<TEntity>): Promise<TEntity> {
+  public async update(
+    id: string | number,
+    data: Partial<TEntity>,
+  ): Promise<TEntity> {
     return await this.databaseService.update({
       where: { id },
       data,
